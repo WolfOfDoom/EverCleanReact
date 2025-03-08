@@ -1,30 +1,14 @@
 import React, { useState } from "react";
 import ProductForm from "./ProductForm";
-import ProductList from "./ProductList";
 
-const AdminPanel = () => {
-    const [products, setProducts] = useState([
-        { id: 1, name: "Zapato Impermeable 1", price: 50 },
-        { id: 2, name: "Zapato Impermeable 2", price: 60 },
-        { id: 3, name: "Zapato Impermeable 3", price: 70 },
-    ]);
-    const [editingProduct, setEditingProduct] = useState(null);
+const AdminPanel = ({ products, deleteProduct, setEditingProduct, addProduct, editProduct }) => {
+    const [editingProductLocal, setEditingProductLocal] = useState(null);
 
-    const addProduct = (product) => {
-        setProducts([...products, { ...product, id: Date.now() }]);
-    };
-
-    const editProduct = (updatedProduct) => {
-        setProducts(
-            products.map((product) =>
-                product.id === updatedProduct.id ? updatedProduct : product
-            )
-        );
-        setEditingProduct(null);
-    };
-
-    const deleteProduct = (id) => {
-        setProducts(products.filter((product) => product.id !== id));
+    const handleDelete = (id) => {
+        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este producto?");
+        if (confirmDelete) {
+            deleteProduct(id); // Solo elimina si el usuario confirma
+        }
     };
 
     return (
@@ -33,13 +17,17 @@ const AdminPanel = () => {
             <ProductForm
                 addProduct={addProduct}
                 editProduct={editProduct}
-                editingProduct={editingProduct}
+                editingProduct={editingProductLocal}
             />
-            <ProductList
-                products={products}
-                deleteProduct={deleteProduct}
-                setEditingProduct={setEditingProduct}
-            />
+            <ul>
+                {products.map((product) => (
+                    <li key={product.id}>
+                        {product.name} - ${product.price}
+                        <button onClick={() => setEditingProductLocal(product)}>Editar</button>
+                        <button onClick={() => handleDelete(product.id)}>Eliminar</button>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

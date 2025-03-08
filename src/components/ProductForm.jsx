@@ -17,9 +17,9 @@ const ProductForm = ({ addProduct, editProduct, editingProduct }) => {
         e.preventDefault();
         const product = { name, price, description };
         if (editingProduct) {
-            editProduct({ ...product, id: editingProduct.id });
+            editProduct({ ...product, id: editingProduct.id }); // Llamar a editProduct
         } else {
-            addProduct(product);
+            addProduct(product); // Llamar a addProduct
         }
         setName("");
         setPrice("");

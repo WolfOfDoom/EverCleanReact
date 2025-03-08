@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductList = ({ products, addToCart, deleteProduct, setEditingProduct }) => {
+const ProductList = ({ products, addToCart }) => {
     return (
         <div>
             <h2>Productos</h2>
@@ -9,8 +9,6 @@ const ProductList = ({ products, addToCart, deleteProduct, setEditingProduct }) 
                     <li key={product.id}>
                         {product.name} - ${product.price}
                         <button onClick={() => addToCart(product)}>Agregar al carrito</button>
-                        <button onClick={() => setEditingProduct(product)}>Editar</button>
-                        <button onClick={() => deleteProduct(product.id)}>Eliminar</button>
                     </li>
                 ))}
             </ul>
